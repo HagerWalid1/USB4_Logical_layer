@@ -1,3 +1,4 @@
+`default_nettype none
 module transactions_fsm(
 
     input           sb_clk,
@@ -467,3 +468,4 @@ end
 endmodule
 
 
+`resetall
