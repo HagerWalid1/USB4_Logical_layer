@@ -1,3 +1,5 @@
+`default_nettype none
+
 module decoder (
     input enc_clk,
     input rst,
@@ -8,7 +10,7 @@ module decoder (
     input [3:0] d_sel,
     output reg [7:0] lane_0_rx,
     output reg [7:0] lane_1_rx,
-    output reg [127:0] data_os,
+    output reg [127:0] data_os_i,
     output reg enable_deskew
 );
 
@@ -46,7 +48,7 @@ always @(posedge enc_clk or negedge rst) begin
         lane_0_rx <= 0;
         lane_1_rx <= 0;
         enable_deskew <= 0;
-        data_os <= 0;
+        data_os_i <= 0;
         // Reset mem_index
         mem_index <= 0;
         flag <= 0;
@@ -86,10 +88,10 @@ always @(posedge enc_clk or negedge rst) begin
                   end
                 
                 if (d_sel == 8 ) begin
-                    data_os <= 1;
+                    data_os_i <= 1;
                   end
                   else begin
-                    data_os <= 0;
+                    data_os_i <= 0;
                   end
                     
                 end
@@ -103,10 +105,10 @@ always @(posedge enc_clk or negedge rst) begin
                     end
                     if (mem_0[15][3:0] == 4'b1010) begin
                         // Ordered sets
-                        data_os <= 0;
+                        data_os_i <= 0;
                     end else if (mem_0[15][3:0] == 4'b0101) begin
                         // Transport layer data
-                        data_os <= 1;
+                        data_os_i <= 1;
                 end
             end
             end
@@ -119,10 +121,10 @@ always @(posedge enc_clk or negedge rst) begin
                     end
                         if (mem_0[7][1:0] == 2'b10) begin
                         // Ordered sets
-                        data_os <= 0;
+                        data_os_i <= 0;
                     end else if (mem_0[7][1:0] == 2'b01) begin
                         // Transport layer data
-                        data_os <= 1;
+                        data_os_i <= 1;
                 end
                 end
                 end
@@ -145,3 +147,4 @@ always @(posedge enc_clk or negedge rst) begin
 	end
 
 endmodule
+`resetall
