@@ -1,3 +1,4 @@
+`default_nettype none
 module encoder (
     input enc_clk,
     input rst,
@@ -155,3 +156,5 @@ always @(*) begin
 end
 
 endmodule
+
+`resetall
